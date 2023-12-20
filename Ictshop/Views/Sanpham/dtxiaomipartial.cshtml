@@ -1,0 +1,49 @@
+﻿
+@foreach (var item in Model)
+{
+    <li class="span3">
+        <style>
+            /* Định dạng cho hiệu ứng hover */
+            .custom-hover:hover {
+                background-color: #007bff;
+                color: #fff;
+                /* Các thuộc tính CSS khác khi hover */
+            }
+        </style>
+        <div class="thumbnail custom-hover">
+
+            <a href="@Url.Action("xemchitiet", new {@Masp=item.Masp })"><img src=@Url.Content("~" +item.Anhbia.ToString()) class="img-responsive" alt="" width="400" height="400" /></a>
+            <div class="caption">
+                <center>
+                    <h5>@item.Tensp</h5>
+                    <p>
+                        Lorem Ipsum is simply dummy text.
+                    </p>
+
+                </center>
+
+                <h4 style="text-align:center; ">
+                    @* <a class="btn" href="@Url.Action("xemchitiet", new {@Masp=item.Masp })"> <i class="icon-zoom-in"></i></a> *@
+                    @using (Html.BeginForm("ThemGioHang", "GioHang", new { @iMasp = item.Masp, @strURL = Request.Url.ToString() }))
+                    {
+                        <input type="submit" value="Thêm giỏ hàng" id="bgnGioHang" style="padding:10px" />
+                    }
+                    <a class="btn" href="@Url.Action("xemchitiet", new {@Masp=item.Masp })"> <i class="icon-zoom-in"></i></a>
+                    <a class="btn btn-primary" href="#">@String.Format("{0:0,0}", @item.Giatien) VND</a>
+                </h4>
+            </div>
+        </div>
+    </li>
+}
+@*<div class="col-md-3 col-sm-6">
+        <img src="~/HinhanhSP/ip3.jpg" class="img-responsive" alt="" />
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <img src="~/HinhanhSP/ip3.jpg" class="img-responsive" alt="" />
+    </div>
+    <div class="col-md-3 col-sm-6">
+        <img src="~/HinhanhSP/ip3.jpg" class="img-responsive" alt="" />
+    </div>*@
+</div>
+
+

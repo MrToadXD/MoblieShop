@@ -1,0 +1,9 @@
+- window.document.frmSearch
+- document.frmSearch
+- window.document.form[0]
+- document.form[0]
+- document.getElementById('frmSearch')
+- document.getElementById("frmSearch")
+
+{...}.txtKeyword.{<properties> | <function>}
+

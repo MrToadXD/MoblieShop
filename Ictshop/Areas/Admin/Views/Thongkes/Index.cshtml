@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Ictshop.Models.Thongke>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<br />
+
+<center><h2 style="color:red">Top 5 khách hàng mua hàng nhiều nhất</h2></center>
+<br />
+
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Tên khách hàng
+        </th>
+        <th>
+            Số điện thoại
+        </th>
+        <th>
+            Tổng tiền đã mua
+        </th>
+        <th>
+            Số lượng đơn hàng
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Tennguoidung)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dienthoai)
+            </td>
+            <td>
+                @String.Format("{0:0,0}", item.Tongtien) VNĐ
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Soluong)
+            </td>
+
+        </tr>
+    }
+
+</table>
+@{
+
+    // Khởi tạo StringBuilder
+    var values = new System.Text.StringBuilder();
+    var names = new System.Text.StringBuilder();
+    string[] namess = new string[5];
+
+
+    foreach (var item in Model) {
+        int i = 0;
+
+     
+
+        values.Append(item.Tongtien+ ", ");
+        names.Append("'" + item.Tennguoidung + " '" + ", ");
+
+
+    }
+
+}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Biều đồ Thống kê Tiêu Nhiều Tiền Nhất</h5>
+        <div id="barChart"></div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                new ApexCharts(document.querySelector("#barChart"), {
+                    series: [{
+                        name: 'VND',
+                        data: [@values]
+                    }],
+                    chart: { type: 'bar', height: 350, fontFamily: 'Tahoma, sans-serif' },
+                    plotOptions: { bar: { borderRadius: 4, horizontal: true, } },
+                    dataLabels: { enabled: false },
+
+                    xaxis: {
+                        categories: [@foreach (var item in Model){<text>'@Html.Raw(@item.Tennguoidung)',</text>}],
+                        labels: {
+                            show: true,
+                            style: {
+                                colors: [],
+                                fontSize: '10px',
+                                fontFamily: 'Helvetica, Arial, sans-serif',
+                                fontWeight: 600,
+                                cssClass: 'apexcharts-xaxis-label',
+                            },
+                        }
+                    },
+
+                    yaxis: {
+                        show: true,
+                        labels: {
+                            show: true,
+                            align: 'right',
+                            minWidth: 0,
+                            maxWidth: 200,
+                            style: {
+                                colors: [],
+                                fontSize: '8px',
+                                fontFamily: 'Helvetica, Arial, sans-serif',
+                                fontWeight: 400,
+                                cssClass: 'apexcharts-yaxis-label',
+                            },
+                        },
+                    }
+                }).render();
+            });
+        </script>
+    </div>
+</div>
